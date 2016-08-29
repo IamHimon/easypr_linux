@@ -1,0 +1,55 @@
+
+#include "include/plate_segment.h"
+
+#include <opencv2/opencv.hpp>
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+using namespace easypr;
+
+int test_plate_locate() {
+  cout << "test_plate_locate" << endl;
+
+  const string file = "resources/image/plate_locate.jpg";
+
+  cv::Mat src = imread(file);
+
+  vector<cv::Mat> resultVec;
+  CPlateLocate plate;
+  //plate.setDebug(0);
+  //plate.setLifemode(true);
+
+  int result = plate.plateLocate(src, resultVec);
+  if (result == 0) {
+    size_t num = resultVec.size();
+    for (size_t j = 0; j < num; j++) {
+      cv::Mat resultMat = resultVec[j];
+      imshow("plate_locate", resultMat);
+      waitKey(0);
+    }
+    destroyWindow("plate_locate");
+  }
+
+  return result;
+}
+
+
+int main(int argc, char **argv)
+{
+
+	test_chars_segment();
+	
+	/*
+	Mat img = imread("F:\\work\\data\\00024.jpg");
+	if (img.empty())
+	{
+		cout << "打开图像失败！" << endl;
+		return -1;
+	}
+	namedWindow("image", CV_WINDOW_AUTOSIZE);
+	imshow("image", img);
+	waitKey();
+	*/
+	return 0;
+}
